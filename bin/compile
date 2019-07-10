@@ -53,6 +53,7 @@ case "$STACK" in
 esac
 
 topic "Updating apt caches"
+add-apt-repository ppa:eosrei/fonts
 apt-get $APT_OPTIONS update | indent
 
 for PACKAGE in $PACKAGES; do
@@ -100,4 +101,4 @@ topic "Rewrite package-config files"
 find $BUILD_DIR/.apt -type f -ipath '*/pkgconfig/*.pc' | xargs --no-run-if-empty -n 1 sed -i -e 's!^prefix=\(.*\)$!prefix='"$BUILD_DIR"'/.apt\1!g'
 
 topic "Installing fonts"
-apt install fonts-emojione
+apt-get $APT_OPTIONS -y $APT_FLAGS -d install --reinstall fonts-twemoji-svginot | indent
